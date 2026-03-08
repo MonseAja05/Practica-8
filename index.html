@@ -1,0 +1,683 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Sodo Studio</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+        <style>
+            *{
+                transition: all .25s ease;
+            }
+            
+            body {
+                font-family: "Poppins", sans-serif;
+            }
+
+            h2 {
+                position: relative;
+                text-align: center;
+                font-weight: 700;
+            }
+
+            h2::before,
+            h2::after {
+                content: "";
+                position: absolute;
+                top: 50%;
+                width: 80px;
+                height: 3px;
+                background: linear-gradient(to right, #00bcd4, #007a8c);
+            }
+
+            h2::before {
+                left: 0;
+                transform: translateX(-100%);
+            }
+            h2::after {
+                right: 0;
+                transform: translateX(100%);
+            }
+
+            html {
+                scroll-behavior: smooth;
+            }
+
+            /* LINEA HOVER NAV */
+            nav ul li a::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                bottom: -4px;
+                width: 0%;
+                height: 2px;
+                background: #06b6d4;
+                transition: 0.3s;
+            }
+            nav ul li a { 
+                position: relative; 
+                transition: color 0.3s; 
+            } 
+            nav ul li a:hover { 
+                color: #06b6d4;
+            }
+
+            nav ul li a:hover::after {
+                width: 100%;
+            }
+
+            /* CARRUSEL */
+
+            #trabajos {
+                position: relative;
+            }
+
+            .fade-in {
+                opacity: 0;
+                transform: translateY(40px);
+                transition: all 0.8s ease;
+            }
+            .fade-in.show {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            /* HERO ANIMATION APPLE */
+
+            .hero-title {
+                opacity: 0;
+                transform: translateY(40px);
+                animation: heroTitle 1s ease forwards;
+            }
+
+            .hero-text {
+                opacity: 0;
+                transform: translateY(40px);
+                animation: heroText 1s ease forwards;
+                animation-delay: 0.4s;
+            }
+
+            .hero-btn {
+                opacity: 0;
+                transform: translateY(40px);
+                animation: heroBtn 1s ease forwards;
+                animation-delay: 0.8s;
+            }
+
+            @keyframes heroTitle {
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            @keyframes heroText {
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            @keyframes heroBtn {
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            /* CONTENEDOR DE LAS CARDS */
+            .carousel-track .card {
+                min-width: 300px;
+                max-width: 300px;
+                height: 380px; /* fuerza todas las cards al mismo tamaño */
+                border-radius: 16px;
+                overflow: hidden;
+                background: #fff;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+                display: flex;
+                flex-direction: column;
+            }
+
+            /* CONTENEDOR DE IMAGEN */
+            .card img {
+                width: 100%;
+                height: 180px; /* MISMA altura para todas */
+                object-fit: cover; /* evita deformación */
+                display: block;
+            }
+
+            /* CONTENIDO */
+            .card-content {
+                padding: 20px;
+                flex: 1;
+            }
+            /* ============================= */
+            /* RESPONSIVE MOVIL */
+            /* ============================= */
+
+            @media (max-width: 768px){
+
+                /* NAVBAR */
+                nav{
+                    flex-direction:column;
+                    gap:15px;
+                }
+
+                nav ul{
+                    flex-wrap:wrap;
+                    justify-content:center;
+                    gap:10px;
+                }
+
+                /* HERO */
+                .hero-title{
+                    font-size:2rem;
+                }
+
+                .hero-text{
+                    font-size:1rem;
+                }
+
+                .hero-btn{
+                    padding:12px 25px;
+                    font-size:14px;
+                }
+
+                /* SECCIONES */
+                section{
+                    padding-top:80px !important;
+                    padding-bottom:80px !important;
+                }
+
+                /* TITULOS */
+                h2{
+                    font-size:2rem !important;
+                }
+
+                /* SOBRE NOSOTROS */
+                #sobre .grid{
+                    grid-template-columns:1fr;
+                    text-align:center;
+                }
+
+                #sobre img{
+                    height:auto;
+                }
+
+                /* TRABAJOS / CARRUSEL */
+                #carousel > div{
+                    width:100%;
+                }
+
+                #trabajos button{
+                    display:none;
+                }
+
+                /* BLOG */
+                #blog .grid{
+                    grid-template-columns:1fr;
+                }
+
+                /* TESTIMONIOS */
+                #testimonios .grid{
+                    grid-template-columns:1fr;
+                }
+
+                /* CONTACTO */
+                form{
+                    width:100%;
+                }
+            }
+        </style>
+    </head>
+    <body class="font-poppins bg-gradient-to-br from-gray-100 to-white text-gray-800">
+        <!-- HEADER -->
+        <header class="bg-white border-b border-gray-200">
+            <nav class="max-w-7xl mx-auto flex justify-between items-center px-8 py-5">
+                <div class="text-2xl font-bold text-cyan-600 tracking-wide">
+                    Sodo Studio
+                </div>
+
+                <ul class="flex gap-6">
+                    <li><a href="#inicio" class="px-3 py-1 transition">Inicio</a></li>
+
+                    <li><a href="#sobre" class="px-3 py-1 transition">Sobre Nosotros</a></li>
+
+                    <li><a href="#servicios" class="px-3 py-1 transition">Servicios</a></li>
+
+                    <li><a href="#trabajos" class="px-3 py-1 transition">Trabajos</a></li>
+
+                    <li><a href="#blog" class="px-3 py-1 transition">Blog</a></li>
+
+                    <li><a href="#testimonios" class="px-3 py-1 transition">Testimonios</a></li>
+
+                    <li><a href="#contacto" class="px-3 py-1 transition">Contacto</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- HERO -->
+        <section
+            id="inicio"
+            class="relative h-screen flex items-center justify-center text-center text-white bg-cover bg-center bg-fixed"
+            style="background-image: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url(../img/fondo2.jpg)">
+            <!-- BOTON BAJADO -->
+            <div class="space-y-6 mt-16">
+                <h1 class="text-5xl font-bold drop-shadow-lg hero-title">Impulsamos tu presencia digital</h1>
+
+                <p class="text-xl hero-text">Diseño moderno • Desarrollo profesional • Resultados reales</p>
+
+                <a
+                    href="#contacto"
+                    class="hero-btn inline-block px-10 py-4 rounded-full border border-white bg-white/20 backdrop-blur-md font-semibold hover:bg-white hover:text-gray-900 transition transform hover:-translate-y-2 hover:shadow-xl">
+                    Trabajemos juntos
+                </a>
+            </div>
+        </section>
+
+        <!-- SOBRE NOSOTROS -->
+        <section id="sobre" class="py-24 px-6 lg:px-20">
+            <h2 class="text-4xl mb-12">Sobre Nosotros</h2>
+            <div class="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto items-center">
+                <div class="flex-1 flex justify-center">
+                    <img
+                        src="img/QuienesSomos.png"
+                        alt="Equipo Sodo Digital"
+                        class="w-full max-w-md h-[420px] object-cover rounded-2xl shadow-2xl hover:scale-105 transition transform" />
+                </div>
+                <div class="text-gray-600 text-lg leading-relaxed space-y-6 text-justify max-w-lg">
+                    <p>
+                        Somos un estudio digital enfocado en crear experiencias web modernas, funcionales y optimizadas
+                        para el crecimiento empresarial. Hemos trabajado con startups, marcas personales y empresas
+                        consolidadas ayudándolas a mejorar su presencia digital.
+                    </p>
+                    <p>
+                        Creemos en el diseño limpio, el código estructurado y la mejora continua como base del éxito
+                        digital.
+                    </p>
+                    <p>
+                        Nuestra visión es acompañar a nuestros clientes en cada etapa de su transformación digital,
+                        aplicando innovación, creatividad y análisis de resultados para maximizar su impacto en el
+                        mercado.
+                    </p>
+                    <p>
+                        Nuestra misión es entregar soluciones digitales que combinen diseño, tecnología y estrategia
+                        para generar valor real y medible para nuestros clientes.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SERVICIOS -->
+        <section id="servicios" class="py-24 px-6 lg:px-20 bg-gray-50">
+            <h2 class="text-4xl font-bold mb-16">Servicios</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <div
+                    class="bg-white rounded-2xl p-8 shadow-lg flex flex-col items-center text-center hover:scale-105 hover:shadow-2xl transition">
+                    <i class="fas fa-laptop-code fa-3x text-cyan-400 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Desarrollo Web</h3>
+                    <p>Creación de sitios rápidos, seguros y optimizados.</p>
+                </div>
+                <div
+                    class="bg-white rounded-2xl p-8 shadow-lg flex flex-col items-center text-center hover:scale-105 hover:shadow-2xl transition">
+                    <i class="fas fa-paint-brush fa-3x text-cyan-400 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Diseño UI/UX</h3>
+                    <p>Interfaces atractivas centradas en la experiencia del usuario.</p>
+                </div>
+                <div
+                    class="bg-white rounded-2xl p-8 shadow-lg flex flex-col items-center text-center hover:scale-105 hover:shadow-2xl transition">
+                    <i class="fas fa-chart-line fa-3x text-cyan-400 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Marketing Digital</h3>
+                    <p>Estrategias enfocadas en crecimiento y conversión.</p>
+                </div>
+                <div
+                    class="bg-white rounded-2xl p-8 shadow-lg flex flex-col items-center text-center hover:scale-105 hover:shadow-2xl transition">
+                    <i class="fas fa-mobile-alt fa-3x text-cyan-400 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Desarrollo Mobile</h3>
+                    <p>Aplicaciones modernas optimizadas para iOS y Android.</p>
+                </div>
+                <div
+                    class="bg-white rounded-2xl p-8 shadow-lg flex flex-col items-center text-center hover:scale-105 hover:shadow-2xl transition">
+                    <i class="fas fa-search-dollar fa-3x text-cyan-400 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">SEO Estratégico</h3>
+                    <p>Optimización avanzada para dominar resultados en buscadores.</p>
+                </div>
+                <div
+                    class="bg-white rounded-2xl p-8 shadow-lg flex flex-col items-center text-center hover:scale-105 hover:shadow-2xl transition">
+                    <i class="fas fa-shield-alt fa-3x text-cyan-400 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Seguridad Web</h3>
+                    <p>Protección y monitoreo continuo de tu plataforma.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="trabajos" class="py-24 px-6 lg:px-20 bg-gray-100">
+            <h2 class="text-4xl font-semibold text-center text-gray-800 mb-16">Trabajos</h2>
+
+            <div class="relative max-w-7xl mx-auto">
+                <!-- FLECHA IZQUIERDA -->
+                <button
+                    onclick="prevSlide()"
+                    class="absolute -left-12 top-1/2 -translate-y-1/2 text-3xl text-cyan-600 hover:scale-125 transition">
+                    ❮
+                </button>
+
+                <div class="overflow-hidden px-4">
+                    <div id="carousel" class="flex flex-nowrap items-stretch transition-transform duration-500">
+                        <!-- CARD -->
+                        <div class="w-1/4 flex-shrink-0 p-4">
+                            <div
+                                class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition duration-300 overflow-hidden h-[380px] flex flex-col">
+                                <img src="img/sitio-corporativo.png" class="w-full h-[200px] object-cover" />
+
+                                <div class="p-6 flex flex-col flex-grow">
+                                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Sitio Corporativo</h3>
+                                    <p class="text-gray-600 flex-grow">
+                                        Diseño y desarrollo completo con optimización SEO avanzada.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CARD -->
+                        <div class="w-1/4 flex-shrink-0 p-4">
+                            <div
+                                class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition duration-300 overflow-hidden h-[380px] flex flex-col">
+                                <img src="img/ecommerce-premium.png" class="w-full h-[200px] object-cover" />
+
+                                <div class="p-6 flex flex-col flex-grow">
+                                    <h3 class="text-xl font-semibold text-gray-800 mb-2">E-Commerce Premium</h3>
+                                    <p class="text-gray-600 flex-grow">
+                                        Tienda online con pasarela de pago y experiencia optimizada.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CARD -->
+                        <div class="w-1/4 flex-shrink-0 p-4">
+                            <div
+                                class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition duration-300 overflow-hidden h-[380px] flex flex-col">
+                                <img src="img/appempresarial.png" class="w-full h-[200px] object-cover" />
+
+                                <div class="p-6 flex flex-col flex-grow">
+                                    <h3 class="text-xl font-semibold text-gray-800 mb-2">App Empresarial</h3>
+                                    <p class="text-gray-600 flex-grow">
+                                        Aplicación móvil moderna para gestión interna empresarial.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CARD -->
+                        <div class="w-1/4 flex-shrink-0 p-4">
+                            <div
+                                class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition duration-300 overflow-hidden h-[380px] flex flex-col">
+                                <img
+                                    src="img/open-rediseno-pagina-web-1024x538.jpg"
+                                    class="w-full h-[200px] object-cover" />
+
+                                <div class="p-6 flex flex-col flex-grow">
+                                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Rediseño Web</h3>
+                                    <p class="text-gray-600 flex-grow">
+                                        Optimización visual y mejora de rendimiento del sitio.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FLECHA DERECHA -->
+                <button
+                    onclick="nextSlide()"
+                    class="absolute -right-12 top-1/2 -translate-y-1/2 text-3xl text-cyan-600 hover:scale-125 transition">
+                    ❯
+                </button>
+            </div>
+        </section>
+        <!-- BLOG -->
+        <section id="blog" class="py-24 px-6 lg:px-20 bg-gray-50">
+            <h2 class="text-4xl mb-12">Blog</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <div
+                    class="bg-white rounded-2xl shadow-lg overflow-hidden hover:scale-105 hover:shadow-2xl transition flex flex-col">
+                    <img src="img/tendencias%20web.png" alt="Tendencias Web 2026" class="w-full h-48 object-cover" />
+                    <div class="p-6 flex flex-col flex-1">
+                        <small class="text-gray-400 mb-2">10 Enero 2026</small>
+                        <h3 class="text-xl font-semibold mb-2">Tendencias Web 2026</h3>
+                        <p class="text-gray-600 flex-1">
+                            Exploramos las tecnologías que dominarán este año y cómo aplicarlas en negocios digitales
+                            para mantenerse competitivos.
+                        </p>
+                    </div>
+                </div>
+                <div
+                    class="bg-white rounded-2xl shadow-lg overflow-hidden hover:scale-105 hover:shadow-2xl transition flex flex-col">
+                    <img
+                        src="img/empresa-optimizacion-web.jpg"
+                        alt="Optimización SEO"
+                        class="w-full h-48 object-cover" />
+                    <div class="p-6 flex flex-col flex-1">
+                        <small class="text-gray-400 mb-2">25 Febrero 2026</small>
+                        <h3 class="text-xl font-semibold mb-2">Optimización SEO</h3>
+                        <p class="text-gray-600 flex-1">
+                            Mejores prácticas para mejorar tu posicionamiento, incluyendo estrategias de contenido,
+                            keywords y link building.
+                        </p>
+                    </div>
+                </div>
+                <div
+                    class="bg-white rounded-2xl shadow-lg overflow-hidden hover:scale-105 hover:shadow-2xl transition flex flex-col">
+                    <img
+                        src="img/automatizacion%20inteligente,%20automatizaci%C3%B3n%20inteligente%20de%20procesos.jpeg"
+                        alt="Automatización Digital"
+                        class="w-full h-48 object-cover" />
+                    <div class="p-6 flex flex-col flex-1">
+                        <small class="text-gray-400 mb-2">5 Abril 2026</small>
+                        <h3 class="text-xl font-semibold mb-2">Automatización Digital</h3>
+                        <p class="text-gray-600 flex-1">
+                            Cómo implementar herramientas inteligentes para ahorrar tiempo y mejorar procesos internos
+                            en tu empresa.
+                        </p>
+                    </div>
+                </div>
+                <div
+                    class="bg-white rounded-2xl shadow-lg overflow-hidden hover:scale-105 hover:shadow-2xl transition flex flex-col">
+                    <img src="img/Personal-branding.jpeg" alt="Branding Estratégico" class="w-full h-48 object-cover" />
+                    <div class="p-6 flex flex-col flex-1">
+                        <small class="text-gray-400 mb-2">20 Mayo 2026</small>
+                        <h3 class="text-xl font-semibold mb-2">Branding Estratégico</h3>
+                        <p class="text-gray-600 flex-1">
+                            La importancia de una identidad visual sólida y coherente, y cómo impacta la percepción de
+                            tu marca en el público.
+                        </p>
+                    </div>
+                </div>
+                <div
+                    class="bg-white rounded-2xl shadow-lg overflow-hidden hover:scale-105 hover:shadow-2xl transition flex flex-col">
+                    <img
+                        src="img/681d5159758c5c1fe0bd5537_image-28-1024x576.webp"
+                        alt="UX en E-Commerce"
+                        class="w-full h-48 object-cover" />
+                    <div class="p-6 flex flex-col flex-1">
+                        <small class="text-gray-400 mb-2">2 Junio 2026</small>
+                        <h3 class="text-xl font-semibold mb-2">UX en E-Commerce</h3>
+                        <p class="text-gray-600 flex-1">
+                            Claves para aumentar conversiones mediante una experiencia de usuario optimizada y
+                            navegación intuitiva.
+                        </p>
+                    </div>
+                </div>
+                <div
+                    class="bg-white rounded-2xl shadow-lg overflow-hidden hover:scale-105 hover:shadow-2xl transition flex flex-col">
+                    <img
+                        src="img/44b6cfdf-d58d-4eb2-9aa8-6f87621b8d221724460427648-cuadradas%2520wingsoft-compressed.webp"
+                        alt="Tendencias Mobile"
+                        class="w-full h-48 object-cover" />
+                    <div class="p-6 flex flex-col flex-1">
+                        <small class="text-gray-400 mb-2">15 Julio 2026</small>
+                        <h3 class="text-xl font-semibold mb-2">Tendencias Mobile</h3>
+                        <p class="text-gray-600 flex-1">
+                            Exploramos las últimas tendencias en desarrollo móvil, apps y tecnologías que están
+                            transformando la experiencia digital.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TESTIMONIOS -->
+        <section id="testimonios" class="py-24 px-6 lg:px-20 bg-cyan-50">
+            <h2 class="text-4xl mb-12">Testimonios</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <div
+                    class="bg-white p-8 rounded-2xl shadow-lg flex flex-col items-center text-center hover:scale-105 hover:shadow-2xl transition gap-4">
+                    <img
+                        src="img/testimonio1.jpg"
+                        alt="Cliente 1"
+                        class="w-20 h-20 object-cover rounded-full border-4 border-cyan-400" />
+                    <p class="text-gray-600 flex-1">
+                        "Excelente servicio y resultados increíbles. Su enfoque estratégico nos permitió crecer de
+                        manera constante."
+                    </p>
+                    <h4 class="font-semibold text-gray-900">- Cliente 1</h4>
+                </div>
+                <div
+                    class="bg-white p-8 rounded-2xl shadow-lg flex flex-col items-center text-center hover:scale-105 hover:shadow-2xl transition gap-4">
+                    <img
+                        src="img/testimonio2.jpg"
+                        alt="Cliente 2"
+                        class="w-20 h-20 object-cover rounded-full border-4 border-cyan-400" />
+                    <p class="text-gray-600 flex-1">
+                        "Profesionales, atentos al detalle y siempre disponibles para resolver dudas y mejorar nuestro
+                        proyecto."
+                    </p>
+                    <h4 class="font-semibold text-gray-900">- Cliente 2</h4>
+                </div>
+                <div
+                    class="bg-white p-8 rounded-2xl shadow-lg flex flex-col items-center text-center hover:scale-105 hover:shadow-2xl transition gap-4">
+                    <img
+                        src="img/testimonio3.jpg"
+                        alt="Cliente 3"
+                        class="w-20 h-20 object-cover rounded-full border-4 border-cyan-400" />
+                    <p class="text-gray-600 flex-1">
+                        "Nuestro negocio creció significativamente gracias a su estrategia digital y acompañamiento
+                        constante."
+                    </p>
+                    <h4 class="font-semibold text-gray-900">- Cliente 3</h4>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACTO -->
+        <section id="contacto" class="py-24 px-6 lg:px-20 bg-gray-100">
+            <h2 class="text-4xl mb-12">Contacto</h2>
+            <form class="max-w-lg mx-auto flex flex-col gap-4">
+                <input
+                    type="text"
+                    placeholder="Tu Nombre"
+                    class="p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-cyan-400" />
+                <input
+                    type="email"
+                    placeholder="Tu Email"
+                    class="p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-cyan-400" />
+                <textarea
+                    placeholder="Tu Mensaje"
+                    class="p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-cyan-400 h-32"></textarea>
+                <button
+                    type="submit"
+                    class="p-3 bg-cyan-400 text-white rounded-full font-semibold hover:bg-cyan-600 transition">
+                    Enviar Mensaje
+                </button>
+            </form>
+            <div class="flex justify-center mt-8 gap-6 text-cyan-400 text-2xl">
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="bg-gray-900 text-white text-center py-6">
+            <p>© 2026 Sodo Studio. Todos los derechos reservados.</p>
+        </footer>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const carousel = document.getElementById("carousel");
+
+                const visible = 4;
+                let index = visible;
+
+                // guardar cards originales
+                const originalCards = Array.from(carousel.children);
+
+                // clonar últimas al inicio
+                for (let i = originalCards.length - visible; i < originalCards.length; i++) {
+                    const clone = originalCards[i].cloneNode(true);
+                    carousel.prepend(clone);
+                }
+
+                // clonar primeras al final
+                for (let i = 0; i < visible; i++) {
+                    const clone = originalCards[i].cloneNode(true);
+                    carousel.appendChild(clone);
+                }
+
+                const total = carousel.children.length;
+
+                // posición inicial
+                carousel.style.transform = `translateX(-${index * 25}%)`;
+
+                function move() {
+                    carousel.style.transition = "transform 0.5s ease";
+                    carousel.style.transform = `translateX(-${index * 25}%)`;
+                }
+
+                window.nextSlide = function () {
+                    index++;
+                    move();
+
+                    if (index >= total - visible) {
+                        setTimeout(() => {
+                            carousel.style.transition = "none";
+                            index = visible;
+                            carousel.style.transform = `translateX(-${index * 25}%)`;
+                        }, 500);
+                    }
+                };
+
+                window.prevSlide = function () {
+                    index--;
+                    move();
+
+                    if (index < visible) {
+                        setTimeout(() => {
+                            carousel.style.transition = "none";
+                            index = total - visible * 2;
+                            carousel.style.transform = `translateX(-${index * 25}%)`;
+                        }, 500);
+                    }
+                };
+            });
+        </script>
+
+        <script>
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("show");
+                    }
+                });
+            });
+
+            document.querySelectorAll("section").forEach((section) => {
+                section.classList.add("fade-in");
+                observer.observe(section);
+            });
+        </script>
+    </body>
+</html>
